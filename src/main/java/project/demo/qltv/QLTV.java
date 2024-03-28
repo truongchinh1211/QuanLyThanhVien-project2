@@ -5,6 +5,8 @@
 
 package project.demo.qltv;
 
+import bus.ThanhVienBUS;
+
 /**
  *
  * @author Bum
@@ -13,5 +15,7 @@ public class QLTV {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        ThanhVienBUS thanhVienBUS = new ThanhVienBUS();
+        thanhVienBUS.getAll();
     }
 }

@@ -5,6 +5,10 @@
 package config;
 
 import java.util.Properties;
+import model.ThanhVien;
+import model.ThietBi;
+import model.ThongTinSD;
+import model.XuLy;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -18,6 +22,7 @@ import org.hibernate.service.ServiceRegistry;
 public class HibernateConfig {
     private static SessionFactory sessionFactory;
     public static SessionFactory getSessionFactory(){
+        if(sessionFactory==null)
         try{
             Configuration configuration = new Configuration();
                 
@@ -38,8 +43,11 @@ public class HibernateConfig {
                 
                 configuration.setProperties(settings);
                 
-                
-                
+                //add annotation
+                configuration.addAnnotatedClass(ThanhVien.class);
+                configuration.addAnnotatedClass(ThietBi.class);
+                configuration.addAnnotatedClass(ThongTinSD.class);
+                configuration.addAnnotatedClass(XuLy.class);
                 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                                                       .applySettings(configuration.getProperties())
