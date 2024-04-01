@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -20,14 +21,14 @@ import lombok.NoArgsConstructor;
  * @author Bum
  */
 @Entity
-@Table(name = "thanhvien")
+@Table(name = "XuLy")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class XuLy {
  @Id
-    private int MaTT;
-@ManyToMany
+private int MaXL;
+@ManyToOne
 @JoinColumn(name = "MaTV")
 private ThanhVien thanhVien;
 @Column(name = "HinhThucXL")
@@ -36,6 +37,6 @@ private LocalDateTime HinhThucXL;
 private int SoTien;
 @Column(name = "NgayXL")
 private LocalDateTime NgayXL;
-@Column (name = "TrangThaiXuLi")
+@Column (name = "TrangThaiXL")
 private int TrangThaiXuLi;
 }

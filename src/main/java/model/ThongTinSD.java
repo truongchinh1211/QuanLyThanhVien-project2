@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -29,10 +30,10 @@ import lombok.NoArgsConstructor;
 public class ThongTinSD {
     @Id
     private int MaTT;
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "MaTV")
     private ThanhVien thanhVien;
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "MaTB")
     private ThietBi ThietBi;
     @Column(name = "TGVao")

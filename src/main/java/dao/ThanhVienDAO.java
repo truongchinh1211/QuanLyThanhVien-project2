@@ -19,7 +19,7 @@ public class ThanhVienDAO {
  public List<ThanhVien> getAll() throws Exception {
     List<ThanhVien> thanhViens = null;
     try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-        thanhViens = session.createQuery("from Department", ThanhVien.class).list();
+        thanhViens = session.createQuery("from ThanhVien", ThanhVien.class).list();
     } catch (Exception e) {
         e.printStackTrace();
         throw new Exception("Error retrieving ThanhVien list:"+ e.getMessage());
