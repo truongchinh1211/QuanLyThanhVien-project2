@@ -1,5 +1,6 @@
 package view.component;
 
+import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
@@ -16,6 +17,8 @@ public class TableActionCellEditor extends DefaultCellEditor {
     public TableActionCellEditor(TableActionEvent event) {
         super(new JCheckBox());
         this.event = event;
+        this.setClickCountToStart(1);
+        this.fireEditingStopped();
     }
 
     @Override

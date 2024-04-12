@@ -15,7 +15,7 @@ import utils.Response;
  * @author Bum
  */
 public class ThanhVienBUS {
-     public Response<List<ThanhVien>> getAll() {
+    public Response<List<ThanhVien>> getAll() {
         Response<List<ThanhVien>> response = new Response<>();
         List<ThanhVien> thanhViens = null;
         try {
@@ -24,33 +24,95 @@ public class ThanhVienBUS {
             response.setStatus(ResponseStatus.SUCCESS);
             response.setData(thanhViens);
         } catch (Exception e) {
-
-            // Xử lý lỗi khi có lỗi trong quá trình gọi DAO
             response.setStatus(ResponseStatus.FAILURE);
             response.setMessage("Error while retrieving ThanhVien list");
         }
         return response;
     }
-     public Response<Boolean> addThanhVien(ThanhVien thanhVien) {
+    
+    
+    public Response<List<ThanhVien>> getAll(String fieldName,Object value) {
+        Response<List<ThanhVien>> response = new Response<>();
+        List<ThanhVien> thanhViens = null;
+        try {
+            ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
+            thanhViens = thanhVienDAO.getAll(fieldName,value);
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setData(thanhViens);
+        } catch (Exception e) {
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setMessage("Error while retrieving ThanhVien list");
+        }
+        return response;
+    }
+    
+    public Response<List<ThanhVien>> getByFilter(String fieldName,Object value) {
+        Response<List<ThanhVien>> response = new Response<>();
+        List<ThanhVien> thanhViens = null;
+        try {
+            ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
+            thanhViens = thanhVienDAO.getByFilter(fieldName, value);
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setData(thanhViens);
+        } catch (Exception e) {
+
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setMessage("Error while retrieving ThanhVien list");
+        }
+        return response;
+    }
+    
+    
+    public Response<ThanhVien> getOne(String fieldName,Object value) {
+        Response<ThanhVien> response = new Response<>();
+        try {
+            ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
+            ThanhVien thanhVien = thanhVienDAO.getOne(fieldName,value);
+            if (thanhVien != null) {
+                response.setStatus(ResponseStatus.SUCCESS);
+                response.setData(thanhVien);
+            } else {
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("ThanhVien with " + fieldName + " = " +value.toString() + " not found.");
+            }
+        } catch (Exception e) {
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setMessage("Error while retrieving ThanhVien " + e.getMessage());
+        }
+        return response;
+    }
+    public int generateMaTV(){
+        try {
+            ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
+            return thanhVienDAO.generateNewMemberCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    public Response<Boolean> add(ThanhVien thanhVien) {
         Response<Boolean> response = new Response<>();
         try {
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
+            if(thanhVienDAO.getOne("MaTV", thanhVien.getMaTV())!=null){
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("MaTV đã tồn tại");
+            }
             boolean isSuccess = thanhVienDAO.add(thanhVien);
             if (isSuccess) {
                 response.setStatus(ResponseStatus.SUCCESS);
                 response.setMessage("Thêm thành viên thành công");
-                response.setData(true); // Trả về true nếu thêm thành công
             }
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(ResponseStatus.FAILURE);
             response.setMessage(e.getMessage()); // Trả về thông báo lỗi từ ngoại lệ
-            response.setData(false); // Trả về false nếu có lỗi xảy ra
         }
         return response;
     }   
      
-    public Response<Boolean> updateThanhVien(ThanhVien thanhVien) {
+    public Response<Boolean> update(ThanhVien thanhVien) {
         Response<Boolean> response = new Response<>();
         try {
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
@@ -58,34 +120,34 @@ public class ThanhVienBUS {
             if (isSuccess) {
                 response.setStatus(ResponseStatus.SUCCESS);
                 response.setMessage("Cập nhật thành viên thành công");
-                response.setData(true);
             } else {
                 response.setStatus(ResponseStatus.FAILURE);
                 response.setMessage("Cập nhật thành viên thất bại");
-                response.setData(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(ResponseStatus.FAILURE);
             response.setMessage("Lỗi khi cập nhật thành viên: " + e.getMessage());
-            response.setData(false);
         }
         return response;
     }
 
-    public Response<Boolean> deleteThanhVien(ThanhVien thanhVien) {
+    public Response<Boolean> delete(int id) {
         Response<Boolean> response = new Response<>();
         try {
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
+            ThanhVien thanhVien = thanhVienDAO.getOne("MaTV", id);
+            if(thanhVien==null){
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("Lỗi xảy ra: không tìm thấy Mã TV của người cần xóa");
+            }
             boolean isSuccess = thanhVienDAO.delete(thanhVien);
             if (isSuccess) {
                 response.setStatus(ResponseStatus.SUCCESS);
                 response.setMessage("Xóa thành viên thành công");
-                response.setData(true);
             } else {
                 response.setStatus(ResponseStatus.FAILURE);
                 response.setMessage("Xóa thành viên thất bại");
-                response.setData(false);
             }
         } catch (Exception e) {
             e.printStackTrace();

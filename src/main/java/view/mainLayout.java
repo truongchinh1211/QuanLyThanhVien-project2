@@ -4,6 +4,7 @@
  */
 package view;
 
+import config.HibernateConfig;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -11,7 +12,8 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import view.component.HighlightPanel;
 import view.component.ScrollBarWin11UI;
-import view.page.UserPage;
+import view.page.ThanhVienPage;
+import view.page.ThietBiPage;
 
 /**
  *
@@ -26,6 +28,7 @@ public class mainLayout extends javax.swing.JFrame {
         setTheme();
         UIDefaults ui = UIManager.getDefaults();
         ui.put("ScrollBarUI",ScrollBarWin11UI.class.getCanonicalName());
+        HibernateConfig.getSessionFactory();
         initComponents();
     }
 
@@ -300,11 +303,12 @@ public class mainLayout extends javax.swing.JFrame {
 
     private void userOpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userOpMouseClicked
         active(userOp);
-        getContent(new UserPage());
+        getContent(new ThanhVienPage());
     }//GEN-LAST:event_userOpMouseClicked
 
     private void deviceOpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deviceOpMouseClicked
         active(deviceOp);
+        getContent(new ThietBiPage());
     }//GEN-LAST:event_deviceOpMouseClicked
 
     /**
