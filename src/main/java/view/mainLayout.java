@@ -14,6 +14,7 @@ import view.component.HighlightPanel;
 import view.component.ScrollBarWin11UI;
 import view.page.ThanhVienPage;
 import view.page.ThietBiPage;
+import view.page.ThongTinSDPage;
 
 /**
  *
@@ -57,6 +58,9 @@ public class mainLayout extends javax.swing.JFrame {
         statisticOp = new view.component.HighlightPanel();
         imageIcon4 = new view.component.imageIcon();
         jLabel2 = new javax.swing.JLabel();
+        checkinOp = new view.component.HighlightPanel();
+        jLabel4 = new javax.swing.JLabel();
+        imageIcon6 = new view.component.imageIcon();
         content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -235,6 +239,45 @@ public class mainLayout extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        checkinOp.setColor(normal);
+        checkinOp.setColorClick(click);
+        checkinOp.setColorOver(hover);
+        checkinOp.setRadius(0);
+        checkinOp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                checkinOpMouseClicked(evt);
+            }
+        });
+
+        jLabel4.setBackground(new java.awt.Color(187, 187, 187));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(188, 188, 188));
+        jLabel4.setText("Check in");
+
+        imageIcon6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/check-in.png"))); // NOI18N
+        imageIcon6.setPreferredSize(new java.awt.Dimension(32, 32));
+
+        javax.swing.GroupLayout checkinOpLayout = new javax.swing.GroupLayout(checkinOp);
+        checkinOp.setLayout(checkinOpLayout);
+        checkinOpLayout.setHorizontalGroup(
+            checkinOpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(checkinOpLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(imageIcon6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        checkinOpLayout.setVerticalGroup(
+            checkinOpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(checkinOpLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(checkinOpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(imageIcon6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout menuBarLayout = new javax.swing.GroupLayout(menuBar);
         menuBar.setLayout(menuBarLayout);
         menuBarLayout.setHorizontalGroup(
@@ -244,7 +287,8 @@ public class mainLayout extends javax.swing.JFrame {
                 .addGroup(menuBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(userOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deviceOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(statisticOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(statisticOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(checkinOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         menuBarLayout.setVerticalGroup(
@@ -256,7 +300,9 @@ public class mainLayout extends javax.swing.JFrame {
                 .addComponent(userOp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deviceOp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(586, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkinOp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(536, Short.MAX_VALUE))
         );
 
         body.add(menuBar, java.awt.BorderLayout.WEST);
@@ -310,6 +356,11 @@ public class mainLayout extends javax.swing.JFrame {
         active(deviceOp);
         getContent(new ThietBiPage());
     }//GEN-LAST:event_deviceOpMouseClicked
+
+    private void checkinOpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkinOpMouseClicked
+                active(checkinOp);
+        getContent(new ThongTinSDPage());
+    }//GEN-LAST:event_checkinOpMouseClicked
 
     /**
      * @param args the command line arguments
@@ -373,6 +424,7 @@ public class mainLayout extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel app;
     private javax.swing.JPanel body;
+    private view.component.HighlightPanel checkinOp;
     private javax.swing.JPanel content;
     private view.component.HighlightPanel deviceOp;
     private javax.swing.JPanel header;
@@ -381,9 +433,11 @@ public class mainLayout extends javax.swing.JFrame {
     private view.component.imageIcon imageIcon2;
     private view.component.imageIcon imageIcon4;
     private view.component.imageIcon imageIcon5;
+    private view.component.imageIcon imageIcon6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel menuBar;
     private view.component.HighlightPanel statisticOp;

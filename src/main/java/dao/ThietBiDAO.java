@@ -77,7 +77,7 @@ public class ThietBiDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new Exception("Lỗi xảy ra khi thêm: " + e.getMessage());
+            throw new Exception(thietBi.getMaTB()+": " + e.getMessage());
         }
     }
     
@@ -92,7 +92,7 @@ public class ThietBiDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new Exception("Lỗi xảy ra khi cập nhật: " + e.getMessage());
+            throw new Exception(thietBi.getMaTB()+": " + e.getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ public class ThietBiDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new Exception("Lỗi xảy ra khi xóa: " + e.getMessage());
+            throw new Exception(thietBi.getMaTB()+": " + e.getMessage());
         }
     }
 }

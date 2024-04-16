@@ -97,7 +97,7 @@ public class ThanhVienBUS {
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
             if(thanhVienDAO.getOne("MaTV", thanhVien.getMaTV())!=null){
                 response.setStatus(ResponseStatus.FAILURE);
-                response.setMessage("MaTV đã tồn tại");
+                response.setMessage(thanhVien.getMaTV()+ ": MaTV đã tồn tại");
             }
             boolean isSuccess = thanhVienDAO.add(thanhVien);
             if (isSuccess) {
@@ -112,10 +112,16 @@ public class ThanhVienBUS {
         return response;
     }   
      
-    public Response<Boolean> update(ThanhVien thanhVien) {
+    public Response<Boolean> update(int oldId,ThanhVien thanhVien) {
         Response<Boolean> response = new Response<>();
         try {
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
+            ThanhVien existingThanhVien = thanhVienDAO.getOne("MaTV", oldId);
+            if(existingThanhVien==null){
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("Không tìm thấy TV có Mã TV này!");
+                return response;
+            }
             boolean isSuccess = thanhVienDAO.update(thanhVien);
             if (isSuccess) {
                 response.setStatus(ResponseStatus.SUCCESS);
@@ -139,7 +145,7 @@ public class ThanhVienBUS {
             ThanhVien thanhVien = thanhVienDAO.getOne("MaTV", id);
             if(thanhVien==null){
                 response.setStatus(ResponseStatus.FAILURE);
-                response.setMessage("Lỗi xảy ra: không tìm thấy Mã TV của người cần xóa");
+                response.setMessage(id+ ": không tìm thấy Mã TV của người cần xóa");
             }
             boolean isSuccess = thanhVienDAO.delete(thanhVien);
             if (isSuccess) {

@@ -15,7 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import model.ThanhVien;
 import model.ThietBi;
+import utils.ExcelUtil;
 import utils.Response;
 import view.component.TableActionCellEditor;
 import view.component.TableActionCellRender;
@@ -104,6 +106,7 @@ public class ThietBiPage extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        msTxt.setEnabled(false);
         ThietBi thietBi = response.getData();
         msTxt.setText(thietBi.getMaTB()+"");
         nameTxt.setText(thietBi.getTenTB());
@@ -150,6 +153,8 @@ public class ThietBiPage extends javax.swing.JPanel {
         keyword = new javax.swing.JComboBox<>();
         searchTxt = new javax.swing.JTextField();
         confirmBtn1 = new view.component.Button();
+        button4 = new view.component.Button();
+        button2 = new view.component.Button();
 
         detailPanel.setBackground(new java.awt.Color(255, 255, 255));
         detailPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(216, 216, 216)));
@@ -452,6 +457,30 @@ public class ThietBiPage extends javax.swing.JPanel {
             }
         });
 
+        button4.setForeground(new java.awt.Color(255, 255, 255));
+        button4.setText("Nhập Excel");
+        button4.setColor(new java.awt.Color(153, 153, 0));
+        button4.setColorClick(new java.awt.Color(255, 153, 0));
+        button4.setColorOver(new java.awt.Color(255, 102, 51));
+        button4.setRadius(5);
+        button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button4ActionPerformed(evt);
+            }
+        });
+
+        button2.setForeground(new java.awt.Color(255, 255, 255));
+        button2.setText("Xóa theo điều kiện");
+        button2.setColor(new java.awt.Color(255, 102, 102));
+        button2.setColorClick(new java.awt.Color(255, 204, 204));
+        button2.setColorOver(new java.awt.Color(255, 153, 153));
+        button2.setRadius(5);
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -461,12 +490,16 @@ public class ThietBiPage extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(144, 144, 144)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(keyword, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(keyword, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(confirmBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -481,7 +514,9 @@ public class ThietBiPage extends javax.swing.JPanel {
                     .addComponent(jLabel12)
                     .addComponent(keyword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(confirmBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(confirmBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -514,9 +549,7 @@ public class ThietBiPage extends javax.swing.JPanel {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         isUpdating=false;
-//        int generatedId = thietBiBUS.generateMaTV();
-//        msTxt.setText(generatedId+"");
-//        System.out.println(generatedId);
+
         userForm.setVisible(true);
         
     }//GEN-LAST:event_button1ActionPerformed
@@ -579,18 +612,47 @@ public class ThietBiPage extends javax.swing.JPanel {
         
         
     }//GEN-LAST:event_confirmBtn1ActionPerformed
+
+    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
+        //        JFileChooser fileChooser = new JFileChooser();
+        //                int returnValue = fileChooser.showOpenDialog(null);
+        //                if (returnValue == JFileChooser.APPROVE_OPTION) {
+            //                    File selectedFile = fileChooser.getSelectedFile();
+            //                    System.out.println(selectedFile.getAbsolutePath());
+            //                    List<ThanhVien> thanhViens = ExcelUtil.readExcelData("C:\\Users\\Son\\Documents\\NetBeansProjects\\QuanLyThanhVien-project2\\src\\main\\java\\xls\\Import_CSDL.xlsx", 0, ThanhVien.class);
+            //                    for (ThanhVien thanhVien : thanhViens) {
+                //                        System.out.println(thanhVien);
+                //                    }
+            //                }
+        List<ThietBi> thietBis = ExcelUtil.readExcelData("C:\\Users\\Son\\Documents\\NetBeansProjects\\QuanLyThanhVien-project2\\src\\main\\java\\xls\\Import_CSDL.xlsx", 1, ThietBi.class);
+        for (ThietBi thietBi : thietBis) {
+            Response response = thietBiBUS.add(thietBi);
+            if(response.getStatus()==ResponseStatus.FAILURE)
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        renderThietBis();
+
+    }//GEN-LAST:event_button4ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button2ActionPerformed
     public void closeDialog(){
         userForm.setVisible(false);
         msTxt.setText("");
+        msTxt.setEnabled(true);
         nameTxt.setText("");
         khoaTxt.setText("");
         nganhTxt.setText("");
         sdtTxt.setText("");
     }
+    
     private boolean isUpdating;
     private customDialog userForm;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private view.component.Button button1;
+    private view.component.Button button2;
+    private view.component.Button button4;
     private view.component.Button closeBtn;
     private view.component.Button confirmBtn;
     private view.component.Button confirmBtn1;

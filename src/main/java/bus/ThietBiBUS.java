@@ -86,7 +86,7 @@ public class ThietBiBUS {
         ThietBiDAO thietBiDAO = new ThietBiDAO();
         if (thietBiDAO.getOne("MaTB", thietBi.getMaTB()) != null) {
             response.setStatus(ResponseStatus.FAILURE);
-            response.setMessage("MaTB đã tồn tại");
+            response.setMessage(thietBi.getMaTB()+ ": MaTB đã tồn tại");
         } else {
             boolean isSuccess = thietBiDAO.add(thietBi);
             if (isSuccess) {
@@ -94,7 +94,7 @@ public class ThietBiBUS {
                 response.setMessage("Thêm thiết bị thành công");
             } else {
                 response.setStatus(ResponseStatus.FAILURE);
-                response.setMessage("Thêm thiết bị thất bại");
+                response.setMessage(thietBi.getMaTB()+": Thêm thiết bị thất bại");
             }
         }
     } catch (Exception e) {
