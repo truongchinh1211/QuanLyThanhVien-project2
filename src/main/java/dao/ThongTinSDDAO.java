@@ -5,6 +5,7 @@
 package dao;
 
 import config.HibernateConfig;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import model.ThongTinSD;
@@ -53,16 +54,28 @@ public class ThongTinSDDAO {
         return thongTinSDs;
     }
     public List<ThongTinSD> getAllCheckin() throws Exception {
-    List<ThongTinSD> thongTinSDs = null;
-    try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-        String hql = "from ThongTinSD where TGVao is not null";
-        Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
-        thongTinSDs = query.list();
-    } catch (Exception e) {
-        throw new Exception("Error retrieving ThongTinSD list: " + e.getMessage());
+        List<ThongTinSD> thongTinSDs = null;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            String hql = "from ThongTinSD where TGVao is not null";
+            Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
+            thongTinSDs = query.list();
+        } catch (Exception e) {
+            throw new Exception("Error retrieving ThongTinSD list: " + e.getMessage());
+        }
+        return thongTinSDs;
     }
-    return thongTinSDs;
-}
+        public List<ThongTinSD> getAllBorrow() throws Exception {
+        List<ThongTinSD> thongTinSDs = null;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            String hql = "from ThongTinSD where TGMuon is not null AND TGTra is not null";
+            Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
+            thongTinSDs = query.list();
+        } catch (Exception e) {
+            throw new Exception("Error retrieving ThongTinSD list: " + e.getMessage());
+        }
+        return thongTinSDs;
+    }
+    
     public List<ThongTinSD> getCheckInByTimeRange(LocalDateTime startTime, LocalDateTime endTime,String sort) throws Exception {
         List<ThongTinSD> thongTinSDs = null;
         if(!"asc".equals(sort)&&!"desc".equals(sort))
@@ -152,6 +165,25 @@ public class ThongTinSDDAO {
             throw new Exception("Error generating ThongTinSD ID: " + e.getMessage());
         }
         return newestId;
+    }
+    public List<ThongTinSD> findConflictingRecords(int MaTB,LocalDateTime startTime, LocalDateTime endTime) throws Exception {
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            String hql = "SELECT t FROM ThongTinSD t " +
+             "WHERE t.ThietBi.MaTB = :MaTB " +
+             "AND (:startTime BETWEEN t.TGMuon AND t.TGTra " +
+             "OR :endTime BETWEEN t.TGMuon AND t.TGTra " +
+             "OR t.TGMuon BETWEEN :startTime AND :endTime " +
+             "OR t.TGTra BETWEEN :startTime AND :endTime)";
+            Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
+            query.setParameter("MaTB", MaTB);
+            query.setParameter("startTime", startTime);
+            query.setParameter("endTime", endTime);
+            List<ThongTinSD> conflictingRecords = query.getResultList();
+            return conflictingRecords;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Lỗi xảy ra " + e.getMessage());
+        }
     }
 
 }

@@ -74,6 +74,20 @@ public class ThongTinSDBUS {
         }
         return response;
     }
+        public Response<List<ThongTinSD>> getAllBorrow() {
+        Response<List<ThongTinSD>> response = new Response<>();
+        List<ThongTinSD> thongTinSDs = null;
+        try {
+            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+            thongTinSDs = thongTinSDDAO.getAllBorrow();
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setData(thongTinSDs);
+        } catch (Exception e) {
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setMessage("Error while retrieving ThongTinSD list: " + e.getMessage());
+        }
+        return response;
+    }
     public Response<List<ThongTinSD>> getCheckInByTimeRange(LocalDateTime startTime, LocalDateTime endTime,String sort) {
         Response<List<ThongTinSD>> response = new Response<>();
         List<ThongTinSD> thongTinSDs = null;
@@ -126,7 +140,31 @@ public class ThongTinSDBUS {
         }
         return response;
     }
-    
+    public Response<Boolean> borrowDevice(ThongTinSD thongTinSD) {
+        Response<Boolean> response = new Response<>();
+        try {
+            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+            List<ThongTinSD> thongTinSDs =thongTinSDDAO.findConflictingRecords(thongTinSD.getThietBi().getMaTB(),thongTinSD.getTGMuon(), thongTinSD.getTGTra());
+            if(!thongTinSDs.isEmpty()){
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("Thiết bị đã có người mượn trong khoảng thời gian này");
+                return response;
+            }
+            thongTinSD.setMaTT(thongTinSDDAO.generateId());
+            boolean isSuccess = thongTinSDDAO.add(thongTinSD);
+            if (isSuccess) {
+                response.setStatus(ResponseStatus.SUCCESS);
+                response.setMessage("Thêm thông tin sử dụng thành công");
+            } else {
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("Thêm thông tin sử dụng thất bại");
+            }
+        } catch (Exception e) {
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setMessage("Lỗi khi thêm thông tin sử dụng: " + e.getMessage());
+        }
+        return response;
+    }
     public Response<Boolean> update(ThongTinSD thongTinSD) {
         Response<Boolean> response = new Response<>();
         try {
