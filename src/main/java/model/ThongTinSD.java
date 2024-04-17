@@ -4,6 +4,7 @@
  */
 package model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,10 +30,10 @@ import lombok.NoArgsConstructor;
 public class ThongTinSD {
     @Id
     private int MaTT;
-    @ManyToOne
-    @JoinColumn(name = "MaTV", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "MaTV")
     private ThanhVien thanhVien;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "MaTB")
     private ThietBi ThietBi;
     @Column(name = "TGVao")

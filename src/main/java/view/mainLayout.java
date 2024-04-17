@@ -15,6 +15,7 @@ import view.component.ScrollBarWin11UI;
 import view.page.ThanhVienPage;
 import view.page.ThietBiPage;
 import view.page.ThongTinSDPage;
+import view.page.ViPhamPage;
 
 /**
  *
@@ -61,6 +62,9 @@ public class mainLayout extends javax.swing.JFrame {
         checkinOp = new view.component.HighlightPanel();
         jLabel4 = new javax.swing.JLabel();
         imageIcon6 = new view.component.imageIcon();
+        bannedOp = new view.component.HighlightPanel();
+        jLabel5 = new javax.swing.JLabel();
+        imageIcon7 = new view.component.imageIcon();
         content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -278,6 +282,45 @@ public class mainLayout extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        bannedOp.setColor(normal);
+        bannedOp.setColorClick(click);
+        bannedOp.setColorOver(hover);
+        bannedOp.setRadius(0);
+        bannedOp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bannedOpMouseClicked(evt);
+            }
+        });
+
+        jLabel5.setBackground(new java.awt.Color(187, 187, 187));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(188, 188, 188));
+        jLabel5.setText("Vi phạm");
+
+        imageIcon7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/cancel.png"))); // NOI18N
+        imageIcon7.setPreferredSize(new java.awt.Dimension(32, 32));
+
+        javax.swing.GroupLayout bannedOpLayout = new javax.swing.GroupLayout(bannedOp);
+        bannedOp.setLayout(bannedOpLayout);
+        bannedOpLayout.setHorizontalGroup(
+            bannedOpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bannedOpLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(imageIcon7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        bannedOpLayout.setVerticalGroup(
+            bannedOpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bannedOpLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bannedOpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(imageIcon7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout menuBarLayout = new javax.swing.GroupLayout(menuBar);
         menuBar.setLayout(menuBarLayout);
         menuBarLayout.setHorizontalGroup(
@@ -288,7 +331,8 @@ public class mainLayout extends javax.swing.JFrame {
                     .addComponent(userOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deviceOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(statisticOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(checkinOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(checkinOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bannedOp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         menuBarLayout.setVerticalGroup(
@@ -302,7 +346,9 @@ public class mainLayout extends javax.swing.JFrame {
                 .addComponent(deviceOp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(checkinOp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(536, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bannedOp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(486, Short.MAX_VALUE))
         );
 
         body.add(menuBar, java.awt.BorderLayout.WEST);
@@ -361,6 +407,11 @@ public class mainLayout extends javax.swing.JFrame {
                 active(checkinOp);
         getContent(new ThongTinSDPage());
     }//GEN-LAST:event_checkinOpMouseClicked
+
+    private void bannedOpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bannedOpMouseClicked
+                active(bannedOp);
+        getContent(new ViPhamPage());
+    }//GEN-LAST:event_bannedOpMouseClicked
 
     /**
      * @param args the command line arguments
@@ -423,6 +474,7 @@ public class mainLayout extends javax.swing.JFrame {
     private Color active,normal,hover,click;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel app;
+    private view.component.HighlightPanel bannedOp;
     private javax.swing.JPanel body;
     private view.component.HighlightPanel checkinOp;
     private javax.swing.JPanel content;
@@ -434,10 +486,12 @@ public class mainLayout extends javax.swing.JFrame {
     private view.component.imageIcon imageIcon4;
     private view.component.imageIcon imageIcon5;
     private view.component.imageIcon imageIcon6;
+    private view.component.imageIcon imageIcon7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel menuBar;
     private view.component.HighlightPanel statisticOp;

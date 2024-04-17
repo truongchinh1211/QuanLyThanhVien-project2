@@ -4,6 +4,7 @@
  */
 package model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -28,13 +29,13 @@ import lombok.NoArgsConstructor;
 public class XuLy {
  @Id
 private int MaXL;
-@ManyToOne
+@ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name = "MaTV")
 private ThanhVien thanhVien;
 @Column(name = "HinhThucXL")
-private LocalDateTime HinhThucXL;
+private String HinhThucXL;
 @Column(name = "SoTien")
-private int SoTien;
+private Integer SoTien;
 @Column(name = "NgayXL")
 private LocalDateTime NgayXL;
 @Column (name = "TrangThaiXL")

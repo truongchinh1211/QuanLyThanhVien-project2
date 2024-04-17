@@ -7,6 +7,7 @@ package view.page;
 import bus.ThanhVienBUS;
 import bus.ThietBiBUS;
 import bus.ThongTinSDBUS;
+import bus.XuLyBUS;
 import com.toedter.calendar.JCalendar;
 import constants.ResponseStatus;
 import java.awt.Color;
@@ -29,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 import model.ThanhVien;
 import model.ThietBi;
 import model.ThongTinSD;
+import model.XuLy;
 import utils.DateTimeUtils;
 import utils.ExcelUtil;
 import utils.Response;
@@ -114,7 +116,15 @@ public class ThongTinSDPage extends javax.swing.JPanel {
         table.revalidate();
         table.repaint();
     }
-    
+    public void renderBorrows(){
+        Response<List<ThongTinSD>> response = thongTinSDBUS.getAllBorrow();
+        DefaultTableModel model = (DefaultTableModel)borrowTable.getModel();
+        model.setRowCount(0);
+        for(ThongTinSD thongTinSD: response.getData()){
+            Object[] row = new Object[]{thongTinSD.getMaTT(),thongTinSD.getThietBi().getMoTaTB(),thongTinSD.getThanhVien().getHoTen(),DateTimeUtils.format(thongTinSD.getTGMuon()),DateTimeUtils.format(thongTinSD.getTGTra())};
+            model.addRow(row);
+        }
+    }
     public void renderDetail(int id){
 //        Response<ThongTin> response = thongTinSDBUS.getOne("MaTV",id);
 //        if(response.getStatus() == ResponseStatus.FAILURE){
@@ -157,6 +167,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         borrowTable = new javax.swing.JTable();
+        confirmBtn3 = new view.component.Button();
         checkinPanel = new javax.swing.JPanel();
         confirmBtn2 = new view.component.Button();
         closeBtn1 = new view.component.Button();
@@ -250,7 +261,15 @@ public class ThongTinSDPage extends javax.swing.JPanel {
             new String [] {
                 "STT", "Tên thiết bị", "Tên TV", "TG mượn", "TG trả"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(new java.awt.Color(56, 138, 112)); // Đặt màu nền của tiêu đề
         borrowTable.setSelectionBackground(new java.awt.Color(255, 153, 51));
@@ -271,6 +290,17 @@ public class ThongTinSDPage extends javax.swing.JPanel {
 
         jScrollPane3.setViewportView(jScrollPane2);
 
+        confirmBtn3.setText("Xóa");
+        confirmBtn3.setColor(new java.awt.Color(255, 102, 102));
+        confirmBtn3.setColorClick(new java.awt.Color(153, 153, 153));
+        confirmBtn3.setColorOver(new java.awt.Color(102, 102, 102));
+        confirmBtn3.setRadius(5);
+        confirmBtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmBtn3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout detailPanelLayout = new javax.swing.GroupLayout(detailPanel);
         detailPanel.setLayout(detailPanelLayout);
         detailPanelLayout.setHorizontalGroup(
@@ -280,7 +310,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
                     .addGroup(detailPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(renameTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(detailPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detailPanelLayout.createSequentialGroup()
                         .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(detailPanelLayout.createSequentialGroup()
                                 .addGap(107, 107, 107)
@@ -319,7 +349,9 @@ public class ThongTinSDPage extends javax.swing.JPanel {
                                         .addComponent(msTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                                         .addComponent(maTBTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(32, 32, 32)))
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(confirmBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)))
                 .addContainerGap())
         );
@@ -370,7 +402,9 @@ public class ThongTinSDPage extends javax.swing.JPanel {
                             .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(confirmBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         checkinPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -717,7 +751,8 @@ public class ThongTinSDPage extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null,response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
                 return; 
             }
-            
+            JOptionPane.showMessageDialog(null,response.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
+            renderBorrows();
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng định dạng", "Warning", JOptionPane.WARNING_MESSAGE);
         }
@@ -748,13 +783,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
     }//GEN-LAST:event_confirmBtn1ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
-        Response<List<ThongTinSD>> response = thongTinSDBUS.getAllBorrow();
-        DefaultTableModel model = (DefaultTableModel)borrowTable.getModel();
-        model.setRowCount(0);
-        for(ThongTinSD thongTinSD: response.getData()){
-            Object[] row = new Object[]{thongTinSD.getMaTT(),thongTinSD.getThietBi().getMoTaTB(),thongTinSD.getThanhVien().getHoTen(),DateTimeUtils.format(thongTinSD.getTGMuon()),DateTimeUtils.format(thongTinSD.getTGTra())};
-            model.addRow(row);
-        }
+        renderBorrows();
         issueForm.setVisible(true);
         
     }//GEN-LAST:event_button4ActionPerformed
@@ -779,6 +808,11 @@ public class ThongTinSDPage extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, newResponse.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        XuLyBUS xuLyBUS = new XuLyBUS();
+        Response<XuLy> newRes = xuLyBUS.getLatestRecordByMaTV(Integer.parseInt(id));
+        if(newRes.getStatus()==ResponseStatus.SUCCESS){
+                    JOptionPane.showMessageDialog(null, "Thành viên này đang bị cảnh cáo vi phạm", "Warning", JOptionPane.INFORMATION_MESSAGE);
+        }
         JOptionPane.showMessageDialog(null, newResponse.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
         renderUsers();
         checkinForm.setVisible(false);
@@ -787,6 +821,17 @@ public class ThongTinSDPage extends javax.swing.JPanel {
     private void closeBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtn1ActionPerformed
         closeCheckinForm();
     }//GEN-LAST:event_closeBtn1ActionPerformed
+
+    private void confirmBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtn3ActionPerformed
+        int id = (int) borrowTable.getModel().getValueAt(borrowTable.getSelectedRow(), 0);
+        Response response = thongTinSDBUS.delete(id);
+        if(response.getStatus()==ResponseStatus.FAILURE){
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, response.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
+        renderBorrows();
+    }//GEN-LAST:event_confirmBtn3ActionPerformed
     public void closeCheckinForm(){
         checkinForm.setVisible(false);
         msTxt1.setText("");
@@ -802,7 +847,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
         returnMinute.setText("");
         returnDate.setCalendar(Calendar.getInstance());
     }
-        public LocalDateTime createLocalDateTime(JCalendar calendar, JTextField hourField, JTextField minuteField) {
+    public LocalDateTime createLocalDateTime(JCalendar calendar, JTextField hourField, JTextField minuteField) {
         try{
             int year = calendar.getCalendar().get(Calendar.YEAR);
             int month = calendar.getCalendar().get(Calendar.MONTH) + 1; // Tháng trong Java bắt đầu từ 0
@@ -839,6 +884,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
     private view.component.Button confirmBtn;
     private view.component.Button confirmBtn1;
     private view.component.Button confirmBtn2;
+    private view.component.Button confirmBtn3;
     private javax.swing.JPanel detailPanel;
     private com.toedter.calendar.JDateChooser issueDate;
     private view.custom.textField issueHour;

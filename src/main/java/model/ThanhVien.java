@@ -33,5 +33,5 @@ public class ThanhVien {
     @Column(name="Nganh")
     private String Nganh;
     @Column(name="SDT")
-    private int SDT;
+    private String SDT;
 }

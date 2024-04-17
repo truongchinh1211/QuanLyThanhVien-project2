@@ -163,4 +163,37 @@ public class ThanhVienBUS {
         }
         return response;
     }
+    public Response<Boolean> deleteWithCondition(int id) {
+        Response<Boolean> response = new Response<>();
+        try {
+            ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
+            List<ThanhVien> thanhViens = thanhVienDAO.getAll();
+            if(thanhViens==null){
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("Có lỗi xảy ra");
+            }
+            boolean isSuccess=false;
+            for(ThanhVien thanhVien : thanhViens){
+                String MaTV = thanhVien.getMaTV()+"";
+                String thirdAndFourthDigits = MaTV.substring(2, 4);
+                int number = Integer.parseInt(thirdAndFourthDigits);
+                if(number==id){
+                    isSuccess = thanhVienDAO.delete(thanhVien);
+                }
+            }
+            if (isSuccess) {
+                response.setStatus(ResponseStatus.SUCCESS);
+                response.setMessage("Xóa thành viên thành công");
+            } else {
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("Xóa thành viên thất bại, một số id có thể chưa được xóa");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setMessage("Lỗi khi xóa thành viên: " + e.getMessage());
+            response.setData(false);
+        }
+        return response;
+    }
 }

@@ -8,8 +8,10 @@ import bus.ThietBiBUS;
 import constants.ResponseStatus;
 import java.awt.Color;
 import java.awt.Component;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -41,6 +43,8 @@ public class ThietBiPage extends javax.swing.JPanel {
         setTable();
         userForm = new customDialog(null);
         userForm.setDialogContent(detailPanel);
+        deleteForm = new customDialog(null);
+        deleteForm.setDialogContent(detailPanel1);
         renderThietBis();
     }
     public void setEvent(){
@@ -136,6 +140,12 @@ public class ThietBiPage extends javax.swing.JPanel {
         sdtTxt = new view.custom.textField();
         confirmBtn = new view.component.Button();
         closeBtn = new view.component.Button();
+        detailPanel1 = new javax.swing.JPanel();
+        renameTitle1 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        msTxt1 = new view.custom.textField();
+        confirmBtn2 = new view.component.Button();
+        closeBtn1 = new view.component.Button();
         roundPanel2 = new view.component.RoundPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -280,6 +290,80 @@ public class ThietBiPage extends javax.swing.JPanel {
                     .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(88, Short.MAX_VALUE))
+        );
+
+        detailPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        detailPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(216, 216, 216)));
+
+        renameTitle1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        renameTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        renameTitle1.setText("Xóa thiết bị theo loại");
+
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel13.setText("Loại: ");
+
+        msTxt1.setLabelText("Nhập mã số");
+
+        confirmBtn2.setBackground(new java.awt.Color(204, 204, 255));
+        confirmBtn2.setColor(new java.awt.Color(204, 204, 255));
+        confirmBtn2.setColorClick(new java.awt.Color(153, 153, 153));
+        confirmBtn2.setColorOver(new java.awt.Color(102, 102, 102));
+        confirmBtn2.setLabel("Xác nhận");
+        confirmBtn2.setRadius(5);
+        confirmBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmBtn2ActionPerformed(evt);
+            }
+        });
+
+        closeBtn1.setBackground(new java.awt.Color(204, 204, 255));
+        closeBtn1.setText("Hủy");
+        closeBtn1.setColor(new java.awt.Color(204, 204, 255));
+        closeBtn1.setColorClick(new java.awt.Color(153, 153, 153));
+        closeBtn1.setColorOver(new java.awt.Color(102, 102, 102));
+        closeBtn1.setRadius(5);
+        closeBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeBtn1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout detailPanel1Layout = new javax.swing.GroupLayout(detailPanel1);
+        detailPanel1.setLayout(detailPanel1Layout);
+        detailPanel1Layout.setHorizontalGroup(
+            detailPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailPanel1Layout.createSequentialGroup()
+                .addGroup(detailPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detailPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(renameTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(detailPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel13)
+                        .addGap(40, 40, 40)
+                        .addGroup(detailPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(detailPanel1Layout.createSequentialGroup()
+                                .addComponent(confirmBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(closeBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(msTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 82, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        detailPanel1Layout.setVerticalGroup(
+            detailPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(renameTitle1)
+                .addGap(18, 18, 18)
+                .addGroup(detailPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(msTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(detailPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(confirmBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(closeBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         setBackground(new java.awt.Color(200, 227, 254));
@@ -614,29 +698,47 @@ public class ThietBiPage extends javax.swing.JPanel {
     }//GEN-LAST:event_confirmBtn1ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
-        //        JFileChooser fileChooser = new JFileChooser();
-        //                int returnValue = fileChooser.showOpenDialog(null);
-        //                if (returnValue == JFileChooser.APPROVE_OPTION) {
-            //                    File selectedFile = fileChooser.getSelectedFile();
-            //                    System.out.println(selectedFile.getAbsolutePath());
-            //                    List<ThanhVien> thanhViens = ExcelUtil.readExcelData("C:\\Users\\Son\\Documents\\NetBeansProjects\\QuanLyThanhVien-project2\\src\\main\\java\\xls\\Import_CSDL.xlsx", 0, ThanhVien.class);
-            //                    for (ThanhVien thanhVien : thanhViens) {
-                //                        System.out.println(thanhVien);
-                //                    }
-            //                }
-        List<ThietBi> thietBis = ExcelUtil.readExcelData("C:\\Users\\Son\\Documents\\NetBeansProjects\\QuanLyThanhVien-project2\\src\\main\\java\\xls\\Import_CSDL.xlsx", 1, ThietBi.class);
-        for (ThietBi thietBi : thietBis) {
-            Response response = thietBiBUS.add(thietBi);
-            if(response.getStatus()==ResponseStatus.FAILURE)
-            JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
-        }
-        renderThietBis();
+        JFileChooser fileChooser = new JFileChooser();
+            int returnValue = fileChooser.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                List<ThietBi> thietBis = ExcelUtil.readExcelData(selectedFile.getAbsolutePath(), 1, ThietBi.class);
+                for (ThietBi thietBi : thietBis) {
+                    Response response = thietBiBUS.add(thietBi);
+                    if(response.getStatus()==ResponseStatus.FAILURE)
+                        JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+                renderThietBis();
+            }
+        
 
     }//GEN-LAST:event_button4ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
+        deleteForm.setVisible(true);
     }//GEN-LAST:event_button2ActionPerformed
+
+    private void confirmBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtn2ActionPerformed
+        try{
+            int id = Integer.parseInt(msTxt1.getText());
+            Response response= thietBiBUS.deleteWithCondition(id);
+            if(response.getStatus()==ResponseStatus.FAILURE){
+                JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
+            msTxt1.setText("");
+            deleteForm.setVisible(false);
+            renderThietBis();
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "sai định dạng", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_confirmBtn2ActionPerformed
+
+    private void closeBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtn1ActionPerformed
+        msTxt1.setText("");
+        deleteForm.setVisible(false);
+    }//GEN-LAST:event_closeBtn1ActionPerformed
     public void closeDialog(){
         userForm.setVisible(false);
         msTxt.setText("");
@@ -649,17 +751,22 @@ public class ThietBiPage extends javax.swing.JPanel {
     
     private boolean isUpdating;
     private customDialog userForm;
+    private customDialog deleteForm;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private view.component.Button button1;
     private view.component.Button button2;
     private view.component.Button button4;
     private view.component.Button closeBtn;
+    private view.component.Button closeBtn1;
     private view.component.Button confirmBtn;
     private view.component.Button confirmBtn1;
+    private view.component.Button confirmBtn2;
     private javax.swing.JPanel detailPanel;
+    private javax.swing.JPanel detailPanel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -675,9 +782,11 @@ public class ThietBiPage extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> keyword;
     private view.custom.textField khoaTxt;
     private view.custom.textField msTxt;
+    private view.custom.textField msTxt1;
     private view.custom.textField nameTxt;
     private view.custom.textField nganhTxt;
     private javax.swing.JLabel renameTitle;
+    private javax.swing.JLabel renameTitle1;
     private view.component.RoundPanel roundPanel1;
     private view.component.RoundPanel roundPanel2;
     private view.custom.textField sdtTxt;

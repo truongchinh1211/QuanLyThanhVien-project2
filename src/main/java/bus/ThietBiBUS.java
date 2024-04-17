@@ -151,4 +151,37 @@ public class ThietBiBUS {
         }
         return response;
     }
+    public Response<Boolean> deleteWithCondition(int id) {
+        Response<Boolean> response = new Response<>();
+        try {
+            ThietBiDAO thietBiDAO = new ThietBiDAO();
+            List<ThietBi> thietBis = thietBiDAO.getAll();
+            if(thietBis==null){
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("Có lỗi xảy ra");
+            }
+            boolean isSuccess=false;
+            for(ThietBi thietBi : thietBis){
+                String MaTV = thietBi.getMaTB()+"";
+                char firstDigits = MaTV.charAt(0);
+                int number = Character.getNumericValue(firstDigits);
+                if(number==id){
+                    isSuccess = thietBiDAO.delete(thietBi);
+                }
+            }
+            if (isSuccess) {
+                response.setStatus(ResponseStatus.SUCCESS);
+                response.setMessage("Xóa thiết bị thành công");
+            } else {
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage("Xóa thiết bị thất bại, một số id có thể chưa được xóa");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setMessage("Lỗi khi xóa thiết bị: " + e.getMessage());
+            response.setData(false);
+        }
+        return response;
+    }
 }
