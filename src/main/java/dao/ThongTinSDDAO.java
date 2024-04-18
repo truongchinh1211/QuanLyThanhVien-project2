@@ -169,7 +169,7 @@ public class ThongTinSDDAO {
     public List<ThongTinSD> findConflictingRecords(int MaTB,LocalDateTime startTime, LocalDateTime endTime) throws Exception {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             String hql = "SELECT t FROM ThongTinSD t " +
-             "WHERE t.ThietBi.MaTB = :MaTB " +
+             "WHERE t.thietBi.MaTB = :MaTB " +
              "AND (:startTime BETWEEN t.TGMuon AND t.TGTra " +
              "OR :endTime BETWEEN t.TGMuon AND t.TGTra " +
              "OR t.TGMuon BETWEEN :startTime AND :endTime " +
