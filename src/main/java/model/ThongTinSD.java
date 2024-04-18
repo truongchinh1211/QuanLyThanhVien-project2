@@ -30,12 +30,12 @@ import lombok.NoArgsConstructor;
 public class ThongTinSD {
     @Id
     private int MaTT;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "MaTV")
     private ThanhVien thanhVien;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "MaTB")
-    private ThietBi ThietBi;
+    private ThietBi thietBi;
     @Column(name = "TGVao")
     private LocalDateTime TGVao;
     @Column(name = "TGMuon")

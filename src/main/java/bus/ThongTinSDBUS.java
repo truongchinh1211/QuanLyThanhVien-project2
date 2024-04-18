@@ -80,9 +80,11 @@ public class ThongTinSDBUS {
         try {
             ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
             thongTinSDs = thongTinSDDAO.getAllBorrow();
+            System.out.println(thongTinSDs==null);
             response.setStatus(ResponseStatus.SUCCESS);
             response.setData(thongTinSDs);
         } catch (Exception e) {
+            e.printStackTrace();
             response.setStatus(ResponseStatus.FAILURE);
             response.setMessage("Error while retrieving ThongTinSD list: " + e.getMessage());
         }

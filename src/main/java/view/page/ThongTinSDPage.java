@@ -120,7 +120,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
         Response<List<ThongTinSD>> response = thongTinSDBUS.getAllBorrow();
         DefaultTableModel model = (DefaultTableModel)borrowTable.getModel();
         model.setRowCount(0);
-        for(ThongTinSD thongTinSD: response.getData()){
+        for(ThongTinSD thongTinSD : response.getData()){
             Object[] row = new Object[]{thongTinSD.getMaTT(),thongTinSD.getThietBi().getMoTaTB(),thongTinSD.getThanhVien().getHoTen(),DateTimeUtils.format(thongTinSD.getTGMuon()),DateTimeUtils.format(thongTinSD.getTGTra())};
             model.addRow(row);
         }
@@ -729,8 +729,8 @@ public class ThongTinSDPage extends javax.swing.JPanel {
             if(issueDateTime==null|| returnDateTime==null){
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng định dạng thông tin", "Warning", JOptionPane.WARNING_MESSAGE);
             }
-            int maTV = Integer.parseInt(msTxt.getText());
-            int maTB = Integer.parseInt(maTBTxt.getText());
+            int maTV = Integer.parseInt(msTxt.getText().trim());
+            int maTB = Integer.parseInt(maTBTxt.getText().trim());
             ThanhVienBUS thanhVienBUS = new ThanhVienBUS();
             ThietBiBUS thietBiBUS = new ThietBiBUS();
             Response<ThanhVien> thanhVienRes = thanhVienBUS.getOne("MaTV", maTV);
@@ -794,6 +794,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "không được để trống thông tin", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        id = id.trim();
         ThanhVienBUS thanhVienBUS = new ThanhVienBUS();
         Response<ThanhVien> response = thanhVienBUS.getOne("maTV", id);
         if(response.getStatus()== ResponseStatus.FAILURE){

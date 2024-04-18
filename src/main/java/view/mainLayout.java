@@ -13,7 +13,9 @@ import javax.swing.UIManager;
 import view.component.HighlightPanel;
 import view.component.ScrollBarWin11UI;
 import view.page.ThanhVienPage;
+import view.page.ThanhVienPage1;
 import view.page.ThietBiPage;
+import view.page.ThongKePage;
 import view.page.ThongTinSDPage;
 import view.page.ViPhamPage;
 
@@ -391,6 +393,7 @@ public class mainLayout extends javax.swing.JFrame {
 
     private void statisticOpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statisticOpMouseClicked
         active(statisticOp);
+        getContent(new ThanhVienPage1());
     }//GEN-LAST:event_statisticOpMouseClicked
 
     private void userOpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userOpMouseClicked

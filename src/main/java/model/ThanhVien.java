@@ -4,10 +4,14 @@
  */
 package model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,4 +38,17 @@ public class ThanhVien {
     private String Nganh;
     @Column(name="SDT")
     private String SDT;
+    @OneToMany(mappedBy = "thanhVien", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ThongTinSD> thongTinSDs;
+
+    public ThanhVien(int MaTV, String HoTen, String Khoa, String Nganh, String SDT) {
+        this.MaTV = MaTV;
+        this.HoTen = HoTen;
+        this.Khoa = Khoa;
+        this.Nganh = Nganh;
+        this.SDT = SDT;
+    }
+    
+    
+    
 }
