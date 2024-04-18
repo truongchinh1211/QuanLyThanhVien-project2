@@ -72,6 +72,7 @@ public class PanelChartPie extends javax.swing.JPanel {
 
     public void removeAllData() {
         list.clear();
+        revalidate();
         repaint();
     }
 

@@ -27,6 +27,7 @@ public class ChartPie extends javax.swing.JPanel {
 
     private void initData() {
         panelChartPie1.removeAllData();
+        panelData.removeAll();
         if (model != null) {
             for (ModelChartPie data : model) {
                 panelChartPie1.addItem(data);

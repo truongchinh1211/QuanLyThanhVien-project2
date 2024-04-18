@@ -96,11 +96,6 @@
         </dependency>
         
         <dependency>
-            <groupId>Project.Demo</groupId>
-            <artifactId>fpt_socket</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>unknown.binary</groupId>
             <artifactId>AbsoluteLayout</artifactId>
             <version>SNAPSHOT</version>
