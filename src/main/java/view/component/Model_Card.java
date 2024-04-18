@@ -42,6 +42,10 @@ public class Model_Card {
         this.values = values;
         this.description = description;
     }
+    public Model_Card(String title, String values) {
+        this.title = title;
+        this.values = values;
+    }
 
     public Model_Card() {
     }
