@@ -271,6 +271,7 @@
         </Component>
         <Component class="view.component.textField" name="moneyTxt">
           <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="Nh&#x1ead;p s&#x1ed1; ti&#x1ec1;n"/>
           </Properties>
         </Component>

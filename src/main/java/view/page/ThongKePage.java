@@ -386,8 +386,9 @@ public class ThongKePage extends javax.swing.JPanel {
         if(data[1]==null){
             soTien = 0;
         }
-        else
-            soTien = ((Double) data[1]);
+        else{
+           long soTienLong = (long) data[1]; // Assuming data[1] is a long
+            soTien = (double) soTienLong;}
         card2.setData(new Model_Card("Vi phạm đã xử lý",soLuongVP+""));
         card5.setData(new Model_Card("Tổng số tiền bồi thường",soTien+""));
     }

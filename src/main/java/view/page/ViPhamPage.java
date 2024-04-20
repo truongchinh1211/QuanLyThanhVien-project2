@@ -236,6 +236,7 @@ public class ViPhamPage extends javax.swing.JPanel {
 
         msTxt.setLabelText("Nhập mã số");
 
+        moneyTxt.setEnabled(false);
         moneyTxt.setLabelText("Nhập số tiền");
 
         hour.setLabelText("hh");
