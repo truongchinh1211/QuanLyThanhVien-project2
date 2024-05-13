@@ -75,6 +75,17 @@ public class ThongTinSDDAO {
         }
         return thongTinSDs;
     }
+    public List<ThongTinSD> getAllReserve() throws Exception {
+        List<ThongTinSD> thongTinSDs = null;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            String hql = "from ThongTinSD where TGDatCho is not null AND TGMuon is null";
+            Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
+            thongTinSDs = query.list();
+        } catch (Exception e) {
+            throw new Exception("Error retrieving ThongTinSD list: " + e.getMessage());
+        }
+        return thongTinSDs;
+    }
     
     public List<ThongTinSD> getCheckInByTimeRange(LocalDateTime startTime, LocalDateTime endTime,String sort) throws Exception {
         List<ThongTinSD> thongTinSDs = null;

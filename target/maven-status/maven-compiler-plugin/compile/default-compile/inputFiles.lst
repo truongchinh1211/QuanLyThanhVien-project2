@@ -3,12 +3,16 @@ C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\b
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\RoundPanel.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\utils\ExcelUtil.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\ScrollPaneWin11.java
+C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\ChartPie.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\dao\ThietBiDAO.java
+C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\dao\ThongKeDAO.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\customMenuItem.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\project\demo\qltv\QLTV.java
+C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\PanelChartPie.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\CustomPopupMenu.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\dao\ThanhVienDAO.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\Card.java
+C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\page\ThongKePage.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\bus\ThongTinSDBUS.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\utils\Response.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\textField.java
@@ -18,10 +22,11 @@ C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\v
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\Model_Card.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\PolygonCorner.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\TableActionEvent.java
-C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\page\ThanhVienPage1.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\bus\XuLyBUS.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\TableActionCellEditor.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\HighlightPanel.java
+C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\bus\ThongKeBUS.java
+C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\ItemChartPie.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\customDialog.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\config\HibernateConfig.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\constants\ResponseStatus.java
@@ -32,6 +37,7 @@ C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\m
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\model\ThietBi.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\page\ViPhamPage.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\Button.java
+C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\ModelChartPie.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\PanelAction.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\view\component\TableActionCellRender.java
 C:\Users\Son\Documents\NetBeansProjects\QuanLyThanhVien-project2\src\main\java\model\ThanhVien.java
