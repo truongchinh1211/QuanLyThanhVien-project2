@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class ThietBi {
     @Id
-    private int MaTB;
+    private long MaTB;
     @Column (name = "TenTB")
     private String TenTB;
     @Column (name = "MoTaTB")

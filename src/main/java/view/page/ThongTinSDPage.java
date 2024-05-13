@@ -116,8 +116,8 @@ public class ThongTinSDPage extends javax.swing.JPanel {
         table.revalidate();
         table.repaint();
     }
-    public void renderBorrows(){
-        Response<List<ThongTinSD>> response = thongTinSDBUS.getAllBorrow();
+    public void renderReserve(){
+        Response<List<ThongTinSD>> response = thongTinSDBUS.getAllReserve();
         DefaultTableModel model = (DefaultTableModel)reserveTable.getModel();
         model.setRowCount(0);
         for(ThongTinSD thongTinSD : response.getData()){
@@ -152,12 +152,13 @@ public class ThongTinSDPage extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         reserveTable = new javax.swing.JTable();
         renameTitle1 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        borrowTable = new javax.swing.JTable();
         confirmBtn3 = new view.component.Button();
         confirmBtn4 = new view.component.Button();
         closeBtn2 = new view.component.Button();
+        jLabel13 = new javax.swing.JLabel();
+        mssvTxt = new view.component.textField();
+        jLabel14 = new javax.swing.JLabel();
+        mstbTxt = new view.component.textField();
         checkinPanel = new javax.swing.JPanel();
         confirmBtn2 = new view.component.Button();
         closeBtn1 = new view.component.Button();
@@ -228,43 +229,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
 
         renameTitle1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         renameTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        renameTitle1.setText("Danh sách mượn");
-
-        borrowTable.setFont(new java.awt.Font("Times New Roman", 0, 10)); // NOI18N
-        borrowTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "STT", "Tên thiết bị", "Tên TV", "TG Đặt chỗ"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        borrowTable.setSelectionBackground(new java.awt.Color(255, 153, 51));
-        borrowTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane5.setViewportView(borrowTable);
-        if (borrowTable.getColumnModel().getColumnCount() > 0) {
-            borrowTable.getColumnModel().getColumn(0).setResizable(false);
-            borrowTable.getColumnModel().getColumn(0).setPreferredWidth(1);
-            borrowTable.getColumnModel().getColumn(1).setResizable(false);
-            borrowTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-            borrowTable.getColumnModel().getColumn(2).setResizable(false);
-            borrowTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-            borrowTable.getColumnModel().getColumn(3).setResizable(false);
-            borrowTable.getColumnModel().getColumn(3).setPreferredWidth(100);
-        }
-
-        jScrollPane4.setViewportView(jScrollPane5);
+        renameTitle1.setText("Mượn trực tiếp");
 
         confirmBtn3.setBackground(new java.awt.Color(204, 204, 255));
         confirmBtn3.setText("Xác nhận mượn");
@@ -279,7 +244,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
         });
 
         confirmBtn4.setBackground(new java.awt.Color(204, 204, 255));
-        confirmBtn4.setText("Xác nhận trả");
+        confirmBtn4.setText("Xác nhận mượn");
         confirmBtn4.setColor(new java.awt.Color(204, 204, 255));
         confirmBtn4.setColorClick(new java.awt.Color(153, 153, 153));
         confirmBtn4.setColorOver(new java.awt.Color(102, 102, 102));
@@ -301,29 +266,54 @@ public class ThongTinSDPage extends javax.swing.JPanel {
             }
         });
 
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel13.setText("Thành viên: ");
+
+        mssvTxt.setLabelText("Nhập mã số");
+
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel14.setText("Thiết bị:");
+
+        mstbTxt.setLabelText("Nhập mã số");
+
         javax.swing.GroupLayout detailPanelLayout = new javax.swing.GroupLayout(detailPanel);
         detailPanel.setLayout(detailPanelLayout);
         detailPanelLayout.setHorizontalGroup(
             detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
-                    .addComponent(renameTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4)
-                    .addComponent(renameTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(165, 165, 165)
+                .addComponent(confirmBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(detailPanelLayout.createSequentialGroup()
-                .addGap(143, 143, 143)
-                .addComponent(confirmBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(confirmBtn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(163, 163, 163))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detailPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(closeBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(detailPanelLayout.createSequentialGroup()
+                        .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane3)
+                            .addComponent(renameTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(detailPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(renameTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(detailPanelLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(detailPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(mssvTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(detailPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(mstbTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 70, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detailPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(confirmBtn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(169, 169, 169))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detailPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(closeBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         detailPanelLayout.setVerticalGroup(
@@ -331,19 +321,28 @@ public class ThongTinSDPage extends javax.swing.JPanel {
             .addGroup(detailPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(closeBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(renameTitle)
-                    .addComponent(renameTitle1))
+                .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(detailPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(renameTitle)
+                            .addComponent(renameTitle1))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(detailPanelLayout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mssvTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mstbTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14))
+                        .addGap(73, 73, 73)
+                        .addComponent(confirmBtn4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(detailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confirmBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(confirmBtn4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(confirmBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         checkinPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -678,7 +677,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
     }//GEN-LAST:event_confirmBtn1ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
-        renderBorrows();
+        renderReserve();
         issueForm.setVisible(true);
         
     }//GEN-LAST:event_button4ActionPerformed
@@ -719,20 +718,60 @@ public class ThongTinSDPage extends javax.swing.JPanel {
     }//GEN-LAST:event_closeBtn1ActionPerformed
 
     private void confirmBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtn3ActionPerformed
-        reserveTable.getSelectedRow();
-        
+        int index = reserveTable.getSelectedRow();
+        int ms = Integer.parseInt(reserveTable.getValueAt(index, 0).toString());
+        Response<ThongTinSD> thongTinSdRes = thongTinSDBUS.getOne("MaTT",ms);
+        if(thongTinSdRes.getStatus()==ResponseStatus.FAILURE){
+            JOptionPane.showMessageDialog(null, thongTinSdRes.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        ThongTinSD thongTinSD = thongTinSdRes.getData();
+        thongTinSD.setTGMuon(LocalDateTime.now());
+        Response response = thongTinSDBUS.update(thongTinSD);
+        if(response.getStatus()==ResponseStatus.FAILURE){
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "xác nhận mượn thành công", "Information", JOptionPane.INFORMATION_MESSAGE);
+        renderReserve();
     }//GEN-LAST:event_confirmBtn3ActionPerformed
 
     private void confirmBtn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtn4ActionPerformed
-        // TODO add your handling code here:
+       try {
+           long mssv = Long.parseLong(mssvTxt.getText());
+           long mstb = Long.parseLong(mstbTxt.getText());
+           LocalDateTime borrowTime = LocalDateTime.now();
+           ThongTinSD thongTinSD = new ThongTinSD();
+           thongTinSD.setThanhVien(new ThanhVien());
+           thongTinSD.getThanhVien().setMaTV(mssv);
+           thongTinSD.setThietBi(new ThietBi());
+           thongTinSD.getThietBi().setMaTB(mstb);
+           thongTinSD.setTGDatCho(borrowTime);
+           thongTinSD.setTGMuon(borrowTime);
+           Response response = thongTinSDBUS.borrowDevice(thongTinSD);
+           if(response.getStatus()!=ResponseStatus.SUCCESS){
+                JOptionPane.showMessageDialog(null,response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+           }
+            JOptionPane.showMessageDialog(null, "Lưu thành công", "Information", JOptionPane.INFORMATION_MESSAGE);
+            
+       }catch(NumberFormatException e ){
+            JOptionPane.showMessageDialog(null, "Sai định dạng", "Warning", JOptionPane.WARNING_MESSAGE);
+       }
+       renderReserve();
     }//GEN-LAST:event_confirmBtn4ActionPerformed
 
     private void closeBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtn2ActionPerformed
-        // TODO add your handling code here:
+        closeIssueForm();
     }//GEN-LAST:event_closeBtn2ActionPerformed
     public void closeCheckinForm(){
         checkinForm.setVisible(false);
         msTxt1.setText("");
+    }
+    public void closeIssueForm(){
+        issueForm.setVisible(false);
+        mssvTxt.setText("");
+        mstbTxt.setText("");
     }
 
     public LocalDateTime createLocalDateTime(JCalendar calendar, JTextField hourField, JTextField minuteField) {
@@ -762,7 +801,6 @@ public class ThongTinSDPage extends javax.swing.JPanel {
     private customDialog checkinForm;
     private customDialog issueForm;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable borrowTable;
     private view.component.Button button1;
     private view.component.Button button4;
     private com.toedter.calendar.JDateChooser calendar;
@@ -775,6 +813,8 @@ public class ThongTinSDPage extends javax.swing.JPanel {
     private view.component.Button confirmBtn4;
     private javax.swing.JPanel detailPanel;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -785,10 +825,10 @@ public class ThongTinSDPage extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private view.component.textField msTxt1;
+    private view.component.textField mssvTxt;
+    private view.component.textField mstbTxt;
     private javax.swing.JLabel renameTitle;
     private javax.swing.JLabel renameTitle1;
     private javax.swing.JTable reserveTable;

@@ -177,18 +177,14 @@ public class ThongTinSDDAO {
         }
         return newestId;
     }
-    public List<ThongTinSD> findConflictingRecords(int MaTB,LocalDateTime startTime, LocalDateTime endTime) throws Exception {
+    public List<ThongTinSD> findConflictingRecords(long MaTB,LocalDateTime borrowTime) throws Exception {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             String hql = "SELECT t FROM ThongTinSD t " +
-             "WHERE t.thietBi.MaTB = :MaTB " +
-             "AND (:startTime BETWEEN t.TGMuon AND t.TGTra " +
-             "OR :endTime BETWEEN t.TGMuon AND t.TGTra " +
-             "OR t.TGMuon BETWEEN :startTime AND :endTime " +
-             "OR t.TGTra BETWEEN :startTime AND :endTime)";
+                        "WHERE t.thietBi.MaTB = :MaTB"
+                    + " AND (DATE(t.TGTra) = :ngay OR DATE(t.TGDatCho) = :ngay)";
             Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
             query.setParameter("MaTB", MaTB);
-            query.setParameter("startTime", startTime);
-            query.setParameter("endTime", endTime);
+            query.setParameter("ngay", borrowTime.toLocalDate());
             List<ThongTinSD> conflictingRecords = query.getResultList();
             return conflictingRecords;
         } catch (Exception e) {

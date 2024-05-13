@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class XuLy {
  @Id
-private int MaXL;
+private long MaXL;
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name = "MaTV")
 private ThanhVien thanhVien;

@@ -8,6 +8,8 @@ import constants.ResponseStatus;
 import dao.ThongTinSDDAO;
 import java.time.LocalDateTime;
 import java.util.List;
+import model.ThanhVien;
+import model.ThietBi;
 import model.ThongTinSD;
 import utils.Response;
 
@@ -16,11 +18,20 @@ import utils.Response;
  * @author Son
  */
 public class ThongTinSDBUS {
+    private ThongTinSDDAO thongTinSDDAO;
+    private ThanhVienBUS thanhVienBUS;
+    private ThietBiBUS thietBiBUS;
+    public ThongTinSDBUS(){
+        thongTinSDDAO = new ThongTinSDDAO();
+        thanhVienBUS = new ThanhVienBUS();
+        thietBiBUS = new ThietBiBUS();
+    }
+    
     public Response<List<ThongTinSD>> getAll() {
         Response<List<ThongTinSD>> response = new Response<>();
         List<ThongTinSD> thongTinSDs = null;
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             thongTinSDs = thongTinSDDAO.getAll();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setData(thongTinSDs);
@@ -36,7 +47,7 @@ public class ThongTinSDBUS {
         Response<List<ThongTinSD>> response = new Response<>();
         List<ThongTinSD> thongTinSDs = null;
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             thongTinSDs = thongTinSDDAO.getAll(fieldName, value);
             response.setStatus(ResponseStatus.SUCCESS);
             response.setData(thongTinSDs);
@@ -50,7 +61,7 @@ public class ThongTinSDBUS {
         Response<List<ThongTinSD>> response = new Response<>();
         List<ThongTinSD> thongTinSDs = null;
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             thongTinSDs = thongTinSDDAO.getCheckinByFilter(sort);
             response.setStatus(ResponseStatus.SUCCESS);
             response.setData(thongTinSDs);
@@ -64,7 +75,7 @@ public class ThongTinSDBUS {
         Response<List<ThongTinSD>> response = new Response<>();
         List<ThongTinSD> thongTinSDs = null;
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             thongTinSDs = thongTinSDDAO.getAllCheckin();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setData(thongTinSDs);
@@ -78,8 +89,24 @@ public class ThongTinSDBUS {
         Response<List<ThongTinSD>> response = new Response<>();
         List<ThongTinSD> thongTinSDs = null;
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             thongTinSDs = thongTinSDDAO.getAllBorrow();
+            System.out.println(thongTinSDs==null);
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setData(thongTinSDs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setMessage("Error while retrieving ThongTinSD list: " + e.getMessage());
+        }
+        return response;
+    }
+    public Response<List<ThongTinSD>> getAllReserve() {
+        Response<List<ThongTinSD>> response = new Response<>();
+        List<ThongTinSD> thongTinSDs = null;
+        try {
+             
+            thongTinSDs = thongTinSDDAO.getAllReserve();
             System.out.println(thongTinSDs==null);
             response.setStatus(ResponseStatus.SUCCESS);
             response.setData(thongTinSDs);
@@ -94,7 +121,7 @@ public class ThongTinSDBUS {
         Response<List<ThongTinSD>> response = new Response<>();
         List<ThongTinSD> thongTinSDs = null;
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             thongTinSDs = thongTinSDDAO.getCheckInByTimeRange(startTime, endTime,sort);
             response.setStatus(ResponseStatus.SUCCESS);
             response.setData(thongTinSDs);
@@ -108,7 +135,7 @@ public class ThongTinSDBUS {
     public Response<ThongTinSD> getOne(String fieldName, Object value) {
         Response<ThongTinSD> response = new Response<>();
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             ThongTinSD thongTinSD = thongTinSDDAO.getOne(fieldName, value);
             if (thongTinSD != null) {
                 response.setStatus(ResponseStatus.SUCCESS);
@@ -126,7 +153,7 @@ public class ThongTinSDBUS {
     public Response<Boolean> add(ThongTinSD thongTinSD) {
         Response<Boolean> response = new Response<>();
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             thongTinSD.setMaTT(thongTinSDDAO.generateId());
             boolean isSuccess = thongTinSDDAO.add(thongTinSD);
             if (isSuccess) {
@@ -145,11 +172,24 @@ public class ThongTinSDBUS {
     public Response<Boolean> borrowDevice(ThongTinSD thongTinSD) {
         Response<Boolean> response = new Response<>();
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
-            List<ThongTinSD> thongTinSDs =thongTinSDDAO.findConflictingRecords(thongTinSD.getThietBi().getMaTB(),thongTinSD.getTGMuon(), thongTinSD.getTGTra());
+            Response<ThanhVien> thanhVienRes = thanhVienBUS.getOne("MaTV", thongTinSD.getThanhVien().getMaTV());
+            if(thanhVienRes.getStatus()!=ResponseStatus.SUCCESS){
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage(thanhVienRes.getMessage());
+                return response;
+            }
+            thongTinSD.setThanhVien(thanhVienRes.getData());
+            Response<ThietBi> thietBiRes = thietBiBUS.getOne("MaTB",thongTinSD.getThietBi().getMaTB());
+            if(thietBiRes.getStatus()!=ResponseStatus.SUCCESS){
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setMessage(thietBiRes.getMessage());
+                return response;
+            }
+            thongTinSD.setThietBi(thietBiRes.getData());
+            List<ThongTinSD> thongTinSDs =thongTinSDDAO.findConflictingRecords(thongTinSD.getThietBi().getMaTB(),thongTinSD.getTGMuon());
             if(!thongTinSDs.isEmpty()){
                 response.setStatus(ResponseStatus.FAILURE);
-                response.setMessage("Thiết bị đã có người mượn trong khoảng thời gian này");
+                response.setMessage("Thiết bị đã có người mượn hoặc đặt chỗ trong khoảng thời gian này");
                 return response;
             }
             thongTinSD.setMaTT(thongTinSDDAO.generateId());
@@ -167,10 +207,11 @@ public class ThongTinSDBUS {
         }
         return response;
     }
+    
     public Response<Boolean> update(ThongTinSD thongTinSD) {
         Response<Boolean> response = new Response<>();
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             ThongTinSD existingThongTinSD = thongTinSDDAO.getOne("MaTT", thongTinSD.getMaTT());
             if (existingThongTinSD == null) {
                 response.setStatus(ResponseStatus.FAILURE);
@@ -195,7 +236,7 @@ public class ThongTinSDBUS {
     public Response<Boolean> delete(int id) {
         Response<Boolean> response = new Response<>();
         try {
-            ThongTinSDDAO thongTinSDDAO = new ThongTinSDDAO();
+             
             ThongTinSD thongTinSD = thongTinSDDAO.getOne("MaTT", id);
             if (thongTinSD == null) {
                 response.setStatus(ResponseStatus.FAILURE);
