@@ -79,7 +79,7 @@ public class XuLyBUS {
         }
         return response;
     }
-    public Response<XuLy> getLatestRecordByMaTV(int MaTV ) {
+    public Response<XuLy> getLatestRecordByMaTV(long MaTV ) {
         Response<XuLy> response = new Response<>();
         try {
             XuLyDAO xuLyDAO = new XuLyDAO();

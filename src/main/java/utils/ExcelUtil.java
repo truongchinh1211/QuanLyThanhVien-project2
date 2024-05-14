@@ -19,45 +19,49 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author Son
  */
 public class ExcelUtil {
-    public static <T> List<T> readExcelData(String filePath,int sheet ,Class<T> clazz) {
-        List<T> dataList = new ArrayList<>();
-        try ( FileInputStream excelFile = new FileInputStream(new File(filePath));
-            Workbook workbook = new XSSFWorkbook(excelFile);){
-            Sheet datatypeSheet = workbook.getSheetAt(sheet);
-            Iterator<Row> iterator = datatypeSheet.iterator();
-            // Skip header row
-            if (iterator.hasNext()) {
-                iterator.next();
-            }
-            while (iterator.hasNext()) {
-                Row currentRow = iterator.next();
-                T data = clazz.getDeclaredConstructor().newInstance();
-                int cellIndex = 0;
-                for (Field field : clazz.getDeclaredFields()) {
+    public static <T> List<T> readExcelData(String filePath, int sheet, Class<T> clazz) {
+    List<T> dataList = new ArrayList<>();
+    try (FileInputStream excelFile = new FileInputStream(new File(filePath));
+         Workbook workbook = new XSSFWorkbook(excelFile)) {
+        Sheet datatypeSheet = workbook.getSheetAt(sheet);
+        Iterator<Row> iterator = datatypeSheet.iterator();
+        
+        // Skip header row
+        if (iterator.hasNext()) {
+            iterator.next();
+        }
+        
+        while (iterator.hasNext()) {
+            Row currentRow = iterator.next();
+            T data = clazz.getDeclaredConstructor().newInstance();
+            int cellIndex = 0;
+            for (Field field : clazz.getDeclaredFields()) {
                 field.setAccessible(true);
                 Cell cell = currentRow.getCell(cellIndex++);
                 if (cell != null) {
-                    if (field.getType() == int.class) {
-                        
-                        if (cell.getCellType() == CellType.NUMERIC) {
-                            System.out.println(cell.getNumericCellValue());
-                            field.set(data, (int) cell.getNumericCellValue());
-                        } else if (cell.getCellType() == CellType.STRING) {
-                            System.out.println(Integer.valueOf(cell.getStringCellValue()));
-                            field.set(data, Integer.valueOf(cell.getStringCellValue()));
-                        }
-                    } else if (field.getType() == String.class) {
+                    switch (cell.getCellType()) {
+                        case NUMERIC:
+                            if (field.getType() == int.class || field.getType() == Integer.class) {
+                                field.set(data, (int) cell.getNumericCellValue());
+                            } else if (field.getType() == long.class || field.getType() == Long.class) {
+                                field.set(data, (long) cell.getNumericCellValue());
+                            } else if (field.getType() == String.class) {
+                                field.set(data, String.valueOf((long) cell.getNumericCellValue()));
+                            }
+                            break;
+                        case STRING:
                             field.set(data, cell.getStringCellValue());
-                    } else if (field.getType() == LocalDateTime.class) {
-                        // Handle LocalDateTime type if needed
+                            break;
+                        default:
+                            throw new IllegalStateException("Unexpected cell type: " + cell.getCellType());
                     }
                 }
-                }
-                dataList.add(data);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            dataList.add(data);
         }
-        return dataList;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return dataList;
+}
 }

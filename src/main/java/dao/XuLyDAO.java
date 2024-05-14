@@ -122,7 +122,7 @@ public class XuLyDAO {
             throw new Exception("Lỗi xảy ra khi xóa: " + e.getMessage());
         }
     }
-    public XuLy getLatestRecordByMaTV(int maTV) throws Exception {
+    public XuLy getLatestRecordByMaTV(long maTV) throws Exception {
     try (Session session = HibernateConfig.getSessionFactory().openSession()) {
         String hql = "FROM XuLy WHERE thanhVien.MaTV = :maTV AND TrangThaiXL = 0 ORDER BY NgayXL DESC";
         Query<XuLy> query = session.createQuery(hql, XuLy.class);

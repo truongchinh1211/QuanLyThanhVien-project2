@@ -46,6 +46,7 @@ import view.component.customDialog;
  */
 public class ThongTinSDPage extends javax.swing.JPanel {
     private final ThongTinSDBUS thongTinSDBUS;
+    private final XuLyBUS xuLyBUS;
     private TableActionEvent event;
     /**
      * Creates new form userPage
@@ -53,6 +54,7 @@ public class ThongTinSDPage extends javax.swing.JPanel {
     public ThongTinSDPage() {
         initComponents();
         thongTinSDBUS = new ThongTinSDBUS();
+        xuLyBUS = new XuLyBUS();
         setEvent();
         setTable();
         checkinForm = new customDialog(null);
@@ -840,11 +842,11 @@ public class ThongTinSDPage extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, newResponse.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        XuLyBUS xuLyBUS = new XuLyBUS();
         Response<XuLy> newRes = xuLyBUS.getLatestRecordByMaTV(Integer.parseInt(id));
         if(newRes.getStatus()==ResponseStatus.SUCCESS){
                     JOptionPane.showMessageDialog(null, "Thành viên này đang bị cảnh cáo vi phạm", "Warning", JOptionPane.INFORMATION_MESSAGE);
         }
+        
         JOptionPane.showMessageDialog(null, newResponse.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
         renderUsers();
         checkinForm.setVisible(false);
@@ -873,6 +875,10 @@ public class ThongTinSDPage extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        Response<XuLy> newRes = xuLyBUS.getLatestRecordByMaTV(thongTinSD.getThanhVien().getMaTV());
+        if(newRes.getStatus()==ResponseStatus.SUCCESS){
+                    JOptionPane.showMessageDialog(null, "Thành viên này đang bị cảnh cáo vi phạm", "Warning", JOptionPane.INFORMATION_MESSAGE);
+        }
         JOptionPane.showMessageDialog(null, "xác nhận mượn thành công", "Information", JOptionPane.INFORMATION_MESSAGE);
         renderReserve();
     }//GEN-LAST:event_confirmBtn3ActionPerformed
@@ -890,6 +896,10 @@ public class ThongTinSDPage extends javax.swing.JPanel {
            thongTinSD.setTGDatCho(borrowTime);
            thongTinSD.setTGMuon(borrowTime);
            Response response = thongTinSDBUS.borrowDevice(thongTinSD);
+           Response<XuLy> newRes = xuLyBUS.getLatestRecordByMaTV(thongTinSD.getThanhVien().getMaTV());
+            if(newRes.getStatus()==ResponseStatus.SUCCESS){
+                    JOptionPane.showMessageDialog(null, "Thành viên này đang bị cảnh cáo vi phạm", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            }
            if(response.getStatus()!=ResponseStatus.SUCCESS){
                 JOptionPane.showMessageDialog(null,response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -929,6 +939,10 @@ public class ThongTinSDPage extends javax.swing.JPanel {
         if(response.getStatus()==ResponseStatus.FAILURE){
             JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
             return;
+        }
+        Response<XuLy> newRes = xuLyBUS.getLatestRecordByMaTV(thongTinSD.getThanhVien().getMaTV());
+        if(newRes.getStatus()==ResponseStatus.SUCCESS){
+                    JOptionPane.showMessageDialog(null, "Thành viên này đang bị cảnh cáo vi phạm", "Warning", JOptionPane.INFORMATION_MESSAGE);
         }
         JOptionPane.showMessageDialog(null, "xác nhận mượn thành công", "Information", JOptionPane.INFORMATION_MESSAGE);
         renderReturn();
