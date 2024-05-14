@@ -6,7 +6,10 @@ package dao;
 
 import config.HibernateConfig;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import model.ThongTinSD;
 import org.hibernate.Session;
@@ -79,6 +82,17 @@ public class ThongTinSDDAO {
         List<ThongTinSD> thongTinSDs = null;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             String hql = "from ThongTinSD where TGDatCho is not null AND TGMuon is null";
+            Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
+            thongTinSDs = query.list();
+        } catch (Exception e) {
+            throw new Exception("Error retrieving ThongTinSD list: " + e.getMessage());
+        }
+        return thongTinSDs;
+    }
+        public List<ThongTinSD> getAllReturn() throws Exception {
+        List<ThongTinSD> thongTinSDs = null;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            String hql = "from ThongTinSD where TGTra is null AND TGMuon is not null";
             Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
             thongTinSDs = query.list();
         } catch (Exception e) {
@@ -161,35 +175,38 @@ public class ThongTinSDDAO {
             throw new Exception("Lỗi xảy ra khi xóa: " + e.getMessage());
         }
     }
-        public int generateId() throws Exception {
-        int newestId = 0;
+        public long generateId() throws Exception {
+        long newestId = 0;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             String hql = "select max(MaTT) from ThongTinSD";
-            Query<Integer> query = session.createQuery(hql, Integer.class);
-            Integer maxId = query.uniqueResult();
+            Query<Long> query = session.createQuery(hql, Long.class);
+            Long maxId = query.uniqueResult();
             if (maxId != null) {
                 newestId = maxId + 1;
             } else {
                 newestId = 1;
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Error generating ThongTinSD ID: " + e.getMessage());
         }
         return newestId;
     }
-    public List<ThongTinSD> findConflictingRecords(long MaTB,LocalDateTime borrowTime) throws Exception {
+    public List<ThongTinSD> findConflictingRecords(long MaTB, LocalDateTime borrowTime) throws Exception {
+        LocalDate localDate = borrowTime.toLocalDate();
+        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             String hql = "SELECT t FROM ThongTinSD t " +
-                        "WHERE t.thietBi.MaTB = :MaTB"
-                    + " AND (DATE(t.TGTra) = :ngay OR DATE(t.TGDatCho) = :ngay)";
+                         "WHERE t.thietBi.MaTB = :MaTB " +
+                         "AND (DATE(t.TGTra) = :ngay OR DATE(t.TGDatCho) = :ngay)";
             Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
             query.setParameter("MaTB", MaTB);
-            query.setParameter("ngay", borrowTime.toLocalDate());
+            query.setParameter("ngay", date);
             List<ThongTinSD> conflictingRecords = query.getResultList();
             return conflictingRecords;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Lỗi xảy ra " + e.getMessage());
+            throw new Exception("Lỗi xảy ra: " + e.getMessage());
         }
     }
 

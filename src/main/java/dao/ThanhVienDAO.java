@@ -63,12 +63,12 @@ public class ThanhVienDAO {
         return thanhVien;
     }
     
-    public int generateNewMemberCode() throws Exception {
-        int newMemberCode = 0;
+    public long generateNewMemberCode() throws Exception {
+        long newMemberCode = 0;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             String hql = "select max(MaTV) from ThanhVien";
-            Integer maxMemberCode = (Integer) session.createQuery(hql).uniqueResult();
+            Long maxMemberCode = (Long) session.createQuery(hql).uniqueResult();
             System.out.println(maxMemberCode);
             if (maxMemberCode != null) {
                 newMemberCode = 1+maxMemberCode;

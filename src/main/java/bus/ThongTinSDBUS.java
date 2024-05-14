@@ -107,7 +107,21 @@ public class ThongTinSDBUS {
         try {
              
             thongTinSDs = thongTinSDDAO.getAllReserve();
-            System.out.println(thongTinSDs==null);
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setData(thongTinSDs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setMessage("Error while retrieving ThongTinSD list: " + e.getMessage());
+        }
+        return response;
+    }
+    public Response<List<ThongTinSD>> getAllReturn() {
+        Response<List<ThongTinSD>> response = new Response<>();
+        List<ThongTinSD> thongTinSDs = null;
+        try {
+             
+            thongTinSDs = thongTinSDDAO.getAllReturn();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setData(thongTinSDs);
         } catch (Exception e) {

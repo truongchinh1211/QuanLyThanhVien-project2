@@ -38,14 +38,15 @@ public class ThanhVien {
     private String Nganh;
     @Column(name="SDT")
     private String SDT;
-    @Column(name="email")
-    private String email;
     @Column(name="password")
     private String password;
+    @Column(name="email")
+    private String email;
+
     @OneToMany(mappedBy = "thanhVien", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ThongTinSD> thongTinSDs;
 
-    public ThanhVien(int MaTV, String HoTen, String Khoa, String Nganh, String SDT) {
+    public ThanhVien(long MaTV, String HoTen, String Khoa, String Nganh, String SDT) {
         this.MaTV = MaTV;
         this.HoTen = HoTen;
         this.Khoa = Khoa;

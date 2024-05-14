@@ -51,7 +51,7 @@ public class ThanhVienPage extends javax.swing.JPanel {
         event = new TableActionEvent() {
             @Override
             public void onEdit(int row) {
-                int id =Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+                long id =Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
                 isUpdating=true;
                 oldId = id;
                 renderDetail(id);
@@ -62,7 +62,7 @@ public class ThanhVienPage extends javax.swing.JPanel {
                 if(Ok!=JOptionPane.YES_OPTION)
                     return;
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
-                int id = Integer.parseInt(model.getValueAt(row, 0).toString());
+                long id = Integer.parseInt(model.getValueAt(row, 0).toString());
                 Response response = thanhVienBUS.delete(id);
                 if(response.getStatus() == ResponseStatus.FAILURE){
                     JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
@@ -105,7 +105,7 @@ public class ThanhVienPage extends javax.swing.JPanel {
         table.repaint();
     }
     
-    public void renderDetail(int id){
+    public void renderDetail(long id){
         Response<ThanhVien> response = thanhVienBUS.getOne("MaTV",id);
         if(response.getStatus() == ResponseStatus.FAILURE){
             JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
@@ -659,7 +659,7 @@ public class ThanhVienPage extends javax.swing.JPanel {
     }//GEN-LAST:event_closeBtnActionPerformed
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
-        int id = Integer.parseInt(msTxt.getText());
+        long id = Integer.parseInt(msTxt.getText());
         String name = nameTxt.getText();
         String khoa = khoaTxt.getText();
         String nganh = nganhTxt.getText();
@@ -743,7 +743,7 @@ public class ThanhVienPage extends javax.swing.JPanel {
 
     private void confirmBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtn2ActionPerformed
         try{
-            int id = Integer.parseInt(msTxt1.getText());
+            long id = Integer.parseInt(msTxt1.getText());
             Response response= thanhVienBUS.deleteWithCondition(id);
             if(response.getStatus()==ResponseStatus.FAILURE){
                 JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
@@ -775,7 +775,7 @@ public class ThanhVienPage extends javax.swing.JPanel {
         nganhTxt.setText("");
         msTxt.setText("");
     }
-    private int oldId;
+    private long oldId;
     private boolean isUpdating;
     private customDialog userForm;
     private customDialog deleteForm;

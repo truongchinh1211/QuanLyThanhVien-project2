@@ -97,7 +97,7 @@ public class ThongKeDAO {
     public List<ThongTinSD> timThietBiChuaTra(String keyword) throws Exception {
         LocalDateTime now = LocalDateTime.now();
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-            String hql = "SELECT t FROM ThongTinSD t WHERE t.TGTra > :now";
+            String hql = "SELECT t FROM ThongTinSD t WHERE t.TGTra is null";
             if (keyword != null && !keyword.isEmpty()) {
                 hql += " AND t.thietBi.TenTB LIKE :keyword";
             }

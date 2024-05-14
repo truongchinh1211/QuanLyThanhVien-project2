@@ -81,7 +81,7 @@ public class ThanhVienBUS {
         }
         return response;
     }
-    public int generateMaTV(){
+    public long generateMaTV(){
         try {
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
             return thanhVienDAO.generateNewMemberCode();
@@ -112,7 +112,7 @@ public class ThanhVienBUS {
         return response;
     }   
      
-    public Response<Boolean> update(int oldId,ThanhVien thanhVien) {
+    public Response<Boolean> update(long oldId,ThanhVien thanhVien) {
         Response<Boolean> response = new Response<>();
         try {
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
@@ -138,7 +138,7 @@ public class ThanhVienBUS {
         return response;
     }
 
-    public Response<Boolean> delete(int id) {
+    public Response<Boolean> delete(long id) {
         Response<Boolean> response = new Response<>();
         try {
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
@@ -163,7 +163,7 @@ public class ThanhVienBUS {
         }
         return response;
     }
-    public Response<Boolean> deleteWithCondition(int id) {
+    public Response<Boolean> deleteWithCondition(long id) {
         Response<Boolean> response = new Response<>();
         try {
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
