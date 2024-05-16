@@ -869,6 +869,11 @@ public class ThongTinSDPage extends javax.swing.JPanel {
             return;
         }
         ThongTinSD thongTinSD = thongTinSdRes.getData();
+        LocalDateTime tgDatCho = thongTinSD.getTGDatCho();
+        if (LocalDateTime.now().isBefore(tgDatCho)) {
+            JOptionPane.showMessageDialog(null, "Chưa tới hạn thời gian đặt chỗ, không thể mượn được.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         thongTinSD.setTGMuon(LocalDateTime.now());
         Response response = thongTinSDBUS.update(thongTinSD);
         if(response.getStatus()==ResponseStatus.FAILURE){
