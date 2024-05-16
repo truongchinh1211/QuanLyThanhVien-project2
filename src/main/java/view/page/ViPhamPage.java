@@ -60,7 +60,7 @@ public class ViPhamPage extends javax.swing.JPanel {
         event = new TableActionEvent() {
             @Override
             public void onEdit(int row) {
-                int id =Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+                long id =Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
                 isUpdating=true;
                 oldId = id;
                 renderDetail(id);
@@ -71,7 +71,7 @@ public class ViPhamPage extends javax.swing.JPanel {
                 if(Ok!=JOptionPane.YES_OPTION)
                     return;
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
-                int id = Integer.parseInt(model.getValueAt(row, 0).toString());
+                long id = Integer.parseInt(model.getValueAt(row, 0).toString());
                 Response response = XuLyBUS.delete(id);
                 if(response.getStatus() == ResponseStatus.FAILURE){
                     JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
@@ -115,7 +115,7 @@ public class ViPhamPage extends javax.swing.JPanel {
         table.repaint();
     }
     
-    public void renderDetail(int id){
+    public void renderDetail(long id){
         Response<XuLy> response = XuLyBUS.getOne("MaXL",id);
         if(response.getStatus() == ResponseStatus.FAILURE){
             JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
@@ -575,7 +575,7 @@ public class ViPhamPage extends javax.swing.JPanel {
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         try{
-        int id = Integer.parseInt(msTxt.getText());
+        long id = Integer.parseInt(msTxt.getText());
         Response<ThanhVien> memberRes = thanhVienBUS.getOne("MaTV",id);
         if(memberRes.getStatus()==ResponseStatus.FAILURE){
             JOptionPane.showMessageDialog(null, memberRes.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
@@ -657,7 +657,7 @@ public class ViPhamPage extends javax.swing.JPanel {
             return null;
         }
     }
-    private int oldId;
+    private long oldId;
     private boolean isUpdating;
     private customDialog userForm;
     // Variables declaration - do not modify//GEN-BEGIN:variables

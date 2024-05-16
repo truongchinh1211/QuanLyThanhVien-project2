@@ -363,11 +363,19 @@ public class ThongKePage extends javax.swing.JPanel {
             response = thongKeBUS.timThietBiChuaTra(keyword);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
+        if(conditionCb.getSelectedIndex()==0)
         for(ThongTinSD thongTinSD: response.getData()){
             Object[] row = new Object[]{thongTinSD.getThietBi().getMaTB(),thongTinSD.getThietBi().getTenTB(),
             thongTinSD.getThietBi().getMoTaTB(),DateTimeUtils.format(thongTinSD.getTGMuon()),
             DateTimeUtils.format(thongTinSD.getTGTra())};
             model.addRow(row);
+        }
+        else{
+            for(ThongTinSD thongTinSD: response.getData()){
+            Object[] row = new Object[]{thongTinSD.getThietBi().getMaTB(),thongTinSD.getThietBi().getTenTB(),
+            thongTinSD.getThietBi().getMoTaTB(),DateTimeUtils.format(thongTinSD.getTGMuon()),"Chưa trả"};
+            model.addRow(row);
+        }
         }
     }
     public void setCard(LocalDateTime startTime,LocalDateTime endTime){

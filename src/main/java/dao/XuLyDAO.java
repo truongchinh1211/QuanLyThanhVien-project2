@@ -62,12 +62,12 @@ public class XuLyDAO {
         }
         return xuLy;
     }
-    public int generateNewId() throws Exception {
-        int newMemberCode = 0;
+    public long generateNewId() throws Exception {
+        long newMemberCode = 0;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             String hql = "select max(MaXL) from XuLy";
-            Integer maxMemberCode = (Integer) session.createQuery(hql).uniqueResult();
+            Long maxMemberCode = (Long) session.createQuery(hql).uniqueResult();
             if (maxMemberCode != null) {
                 newMemberCode = 1 + maxMemberCode;
             } else {

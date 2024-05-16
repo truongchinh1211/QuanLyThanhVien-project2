@@ -102,7 +102,6 @@ public class ThongKeDAO {
                 hql += " AND t.thietBi.TenTB LIKE :keyword";
             }
             Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
-            query.setParameter("now", now);
             if (keyword != null && !keyword.isEmpty()) {
                 query.setParameter("keyword", "%" + keyword + "%");
             }

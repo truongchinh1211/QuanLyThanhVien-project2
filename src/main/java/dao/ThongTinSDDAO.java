@@ -198,10 +198,11 @@ public class ThongTinSDDAO {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             String hql = "SELECT t FROM ThongTinSD t " +
                          "WHERE t.thietBi.MaTB = :MaTB " +
-                         "AND (DATE(t.TGTra) = :ngay OR DATE(t.TGDatCho) = :ngay)";
+                         "AND FUNCTION('DATE', t.TGDatCho) = :ngay " +
+                         "AND t.TGTra is null";
             Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
             query.setParameter("MaTB", MaTB);
-            query.setParameter("ngay", date);
+            query.setParameter("ngay", date); // Use LocalDate directly
             List<ThongTinSD> conflictingRecords = query.getResultList();
             return conflictingRecords;
         } catch (Exception e) {
@@ -209,6 +210,5 @@ public class ThongTinSDDAO {
             throw new Exception("Lỗi xảy ra: " + e.getMessage());
         }
     }
-
 }
 
