@@ -99,6 +99,7 @@ public class ThanhVienBUS {
                 response.setStatus(ResponseStatus.FAILURE);
                 response.setMessage(thanhVien.getMaTV()+ ": MaTV đã tồn tại");
             }
+            thanhVien.setPassword("1");
             boolean isSuccess = thanhVienDAO.add(thanhVien);
             if (isSuccess) {
                 response.setStatus(ResponseStatus.SUCCESS);

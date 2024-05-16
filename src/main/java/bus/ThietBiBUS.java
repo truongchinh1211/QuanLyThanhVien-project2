@@ -125,7 +125,7 @@ public class ThietBiBUS {
         return response;
     }
 
-    public Response<Boolean> delete(int id) {
+    public Response<Boolean> delete(long id) {
         Response<Boolean> response = new Response<>();
         try {
             ThietBiDAO thietBiDAO = new ThietBiDAO();

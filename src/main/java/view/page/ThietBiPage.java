@@ -51,7 +51,7 @@ public class ThietBiPage extends javax.swing.JPanel {
         event = new TableActionEvent() {
             @Override
             public void onEdit(int row) {
-                int id =Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+                long id =Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
                 isUpdating=true;
                 renderDetail(id);
             }
@@ -61,7 +61,7 @@ public class ThietBiPage extends javax.swing.JPanel {
                 if(Ok!=JOptionPane.YES_OPTION)
                     return;
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
-                int id = Integer.parseInt(model.getValueAt(row, 0).toString());
+                long id = Integer.parseInt(model.getValueAt(row, 0).toString());
                 Response response = thietBiBUS.delete(id);
                 if(response.getStatus() == ResponseStatus.FAILURE){
                     JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
@@ -104,7 +104,7 @@ public class ThietBiPage extends javax.swing.JPanel {
         table.repaint();
     }
     
-    public void renderDetail(int id){
+    public void renderDetail(long id){
         Response<ThietBi> response = thietBiBUS.getOne("MaTB",id);
         if(response.getStatus() == ResponseStatus.FAILURE){
             JOptionPane.showMessageDialog(null, response.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
